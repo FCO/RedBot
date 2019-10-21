@@ -1,0 +1,10 @@
+{
+    "red": {
+        "default": true,
+        "red-driver": "SQLite",
+        "named": {
+            "database": "/code/red.db"
+        },
+        "positional": []
+    }
+}
