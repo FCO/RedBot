@@ -10,7 +10,6 @@
   "name" : "RedBot",
   "perl" : "6.c",
   "provides" : {
-    "RedBot" : "lib/RedBot.pm6",
     "RedBot::Server" : "lib/RedBot/Server.pm6"
   },
   "resources" : [ ],

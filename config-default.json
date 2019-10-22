@@ -1,0 +1,41 @@
+{
+    "repo-origin-rakudo"       : "https://github.com/rakudo/rakudo.git",
+    "repo-current-rakudo-moar" : "./data/rakudo-moar",
+    "repo-origin-moarvm"       : "https://github.com/MoarVM/MoarVM.git",
+    "repo-current-moarvm"      : "./data/moarvm",
+
+    "archives-location"        : "./data/builds",
+    "builds-location"          : "/tmp/whateverable/",
+
+    "moarvm" : "./data/moarvm",
+
+    "source" : "https://github.com/perl6/whateverable",
+    "wiki"   : "https://github.com/perl6/whateverable/wiki/",
+
+    "message-limit" :   260,
+    "gist-limit"    : 10000,
+    "commits-limit" :   500,
+    "cave"          : "#whateverable",
+    "caregivers"    : [ "SmokeMachine" ],
+
+    "rakudo-repo"   : "https://github.com/rakudo/rakudo",
+
+    "mothership": "https://whateverable.6lang.org",
+
+    "github": {
+        "login": "",
+        "access_token": ""
+    },
+    "irc": {
+        "login": "",
+        "password": ""
+    },
+    "redable": { },
+    "bisectable": {
+        "commit-link" : "https://github.com/rakudo/rakudo/commit",
+        "build-lock"  : "./lock",
+        "trim-chars"  : 2000
+    },
+
+    "default-stdin": "Red is the ultimate cure for sadness. – Bill Blass\n"
+}
