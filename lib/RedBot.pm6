@@ -8,8 +8,8 @@ multi method said( $_ ) {
 }
 
 multi method red ( $ev ) is cmd {
-    my $p = run 'docker', 'run', '-v', "%*ENV<PWD>/red.db:/code/red.db", 'red-bot', $ev.what.substr(4), :out;
-    $ev.msg: $p.out.slurp
+    my $p = run 'docker', 'run', '-v', "%*ENV<PWD>/red.db:/code/red.db", 'red-bot', $ev.what.substr(4).subst("␤", "\n", :g), :out;
+    $ev.msg: "{ $ev.who<nick> }: { $p.out.slurp.subst: "\n","␤", :g }"
 }
 
 # vim: ft=perl6 tabstop=4 shiftwidth=4
