@@ -1,6 +1,5 @@
 use v6.d;
 use Red <red-do>;
-use RedBot;
 use RedBot::Server;
 
 #!/usr/bin/env perl6
@@ -17,6 +16,17 @@ class Redable does Whateverable {
     }
 
     red-defaults default => database("SQLite", :database<.connection.db>);
+
+    multi method irc-to-me($_) {
+        my $p = run 'docker', 'run',
+                '-v', "%*ENV<PWD>/red.db:/code/red.db",
+                '--rm',
+                'red-bot',
+                .Str.substr(4).subst(/"␤"/, "\n", :g),
+                :out
+        ;
+        $p.out.slurp.subst: /\n/,"␤", :g
+    }
 }
 
 my $*RED-DEBUG = so %*ENV<RED_DEBUG>;
@@ -25,16 +35,10 @@ my %*SUB-MAIN-OPTS =
 ;
 
 multi MAIN("run") {
-    use IRC::Client;
     my %*BOT-ENV;
+    my $nick = RedBot::Server.^all.map(*.nicks).Seq.flatmap: *.split: " ";
 
-    #Redable.new.selfrun: ‘redable’, [ / redable <before ‘:’> /, fuzzy-nick(‘redable’, 2) ];
-    .run with IRC::Client.new:
-        :debug
-        :nick(RedBot::Server.^all.map(*.nicks).Seq.flatmap: *.split: " ")
-        :alias<red>
-        :plugins(Redable.new.self)
-        :servers(%( |RedBot::Server.^all>>.Hash ))
+    Redable.new.selfrun: $nick, [ ‘red’, fuzzy-nick($nick, 1) ];
 }
 
 multi MAIN("list-servers") {
