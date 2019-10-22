@@ -1,11 +1,36 @@
 use v6.d;
+use Red <red-do>;
 use Net::IRC::Bot;
 use RedBot;
+use RedBot::Server;
 
-use IRC::Client;
-.run with IRC::Client.new:
-    :nick<red-bot>
-    :host<irc.freenode.net>
-    :channels<#red>
-    :debug
-    :plugins(RedBot.new)
+my $*RED-DEBUG = so %*ENV<RED_DEBUG>;
+
+red-defaults default => database("SQLite", :database<.connection.db>);
+
+my %*SUB-MAIN-OPTS =
+  :named-anywhere,
+;
+
+multi MAIN("run") {
+    use IRC::Client;
+    .run with IRC::Client.new:
+        :debug
+        :nick(RedBot::Server.^all.map(*.nicks).Seq.flatmap: *.split: " ")
+        :plugins(RedBot.new)
+        :servers(%( RedBot::Server.^all>>.Hash ))
+}
+
+multi MAIN("list-servers") {
+    say %(
+        RedBot::Server.^all>>.Hash
+    )
+}
+
+multi MAIN("create-connection-db") {
+    RedBot::Server.^create-table
+}
+
+multi MAIN("add-server", Str $name, Str :$host!, Str :$nicks!, Str :$channels!) {
+    RedBot::Server.^create: :$name, |(:host($_) with $host), |(:nicks($_) with $nicks), |(:channels($_) with $channels),
+}
