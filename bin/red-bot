@@ -1,6 +1,5 @@
 use v6.d;
 use Red <red-do>;
-use Net::IRC::Bot;
 use RedBot;
 use RedBot::Server;
 
