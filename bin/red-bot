@@ -2,14 +2,10 @@ use v6.d;
 use Net::IRC::Bot;
 use RedBot;
 
-Net::IRC::Bot.new(
-        nick     => 'redable',
-        server   => 'irc.freenode.net',
-        channels => <#red>,
-
-        modules  => (
-                RedBot.new,
-                #Autoident.new(password => 'nspassw0rd')
-        ),
-        debug    => True,
-).run;
+use IRC::Client;
+.run with IRC::Client.new:
+    :nick<red-bot>
+    :host<irc.freenode.net>
+    :channels<#red>
+    :debug
+    :plugins(RedBot.new)
