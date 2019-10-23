@@ -6,8 +6,7 @@ use RedBot::Server;
 
 use Whateverable;
 use Whateverable::Bits;
-use Whateverable::Output;
-use Whateverable::Processing;
+use Whateverable::Config;
 
 class Redable does Whateverable {
 
@@ -37,6 +36,15 @@ my %*SUB-MAIN-OPTS =
 multi MAIN("run") {
     my %*BOT-ENV;
     my $nick = RedBot::Server.^all.map(*.nicks).Seq.flatmap: *.split: " ";
+
+    $CONFIG = %();
+    $CONFIG<source>        = 'https://github.com/FCO/RedBot';
+    $CONFIG<wiki>          = 'https://github.com/FCO/RedBot/wiki';
+    $CONFIG<github>        = %(login => '', access_token => '');
+    $CONFIG<irc>           = %(login => '', password => '');
+    $CONFIG<default-stdin> = "Red is the ultimate cure for sadness. – Bill Blass\n";
+    $CONFIG<cave>          = "#whateverable",
+    $CONFIG<caregivers>    = [ "SmokeMachine" ];
 
     Redable.new.selfrun: $nick, [ ‘red’, fuzzy-nick($nick, 1) ];
 }
