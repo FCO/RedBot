@@ -7,6 +7,7 @@ use RedBot::Server;
 use Whateverable;
 use Whateverable::Bits;
 use Whateverable::Config;
+use Whateverable::Processing;
 
 class Redable does Whateverable {
 
@@ -16,12 +17,17 @@ class Redable does Whateverable {
 
     red-defaults default => database('SQLite', :database<.connection.db>);
 
-    multi method irc-to-me($_) {
+    multi method irc-to-me($msg) {
+        my $file = process-code $msg.text, $msg;
+        # TODO $file will hold path to the file with the code we want
+        #      to run, so we need to somehow pass that file to docker
+        return $file.slurp; # TODO for debugging, remove later
+
         my $p = run 'docker', 'run',
                 '-v', "%*ENV<PWD>/red.db:/code/red.db",
                 '--rm',
                 'red-bot',
-                .Str.substr(4).subst(/"␤"/, "\n", :g),
+                slurp($file),
                 :out
         ;
         return $p.out.slurp
