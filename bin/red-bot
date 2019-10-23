@@ -34,7 +34,6 @@ my %*SUB-MAIN-OPTS =
 ;
 
 multi MAIN("run") {
-    my %*BOT-ENV;
     my $nick = RedBot::Server.^all.map(*.nicks).Seq.flatmap: *.split: " ";
 
     $CONFIG = %();
@@ -46,6 +45,7 @@ multi MAIN("run") {
     $CONFIG<cave>          = "#whateverable",
     $CONFIG<caregivers>    = [ "SmokeMachine" ];
 
+    my %*BOT-ENV;
     Redable.new.selfrun: $nick, [ ‘red’, fuzzy-nick($nick, 1) ];
 }
 
