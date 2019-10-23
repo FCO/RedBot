@@ -14,7 +14,7 @@ class Redable does Whateverable {
         “Like this {$msg.server.current-nick}: <some Red code>”;
     }
 
-    red-defaults default => database("SQLite", :database<.connection.db>);
+    red-defaults default => database('SQLite', :database<.connection.db>);
 
     multi method irc-to-me($_) {
         my $p = run 'docker', 'run',
@@ -33,8 +33,8 @@ my %*SUB-MAIN-OPTS =
   :named-anywhere,
 ;
 
-multi MAIN("run") {
-    my $nick = RedBot::Server.^all.map(*.nicks).Seq.flatmap: *.split: " ";
+multi MAIN('run') {
+    my $nick = RedBot::Server.^all.map(*.nicks).Seq.flatmap: *.split: ' ';
 
     $CONFIG = %();
     $CONFIG<source>        = 'https://github.com/FCO/RedBot';
@@ -42,22 +42,22 @@ multi MAIN("run") {
     $CONFIG<github>        = %(login => '', access_token => '');
     $CONFIG<irc>           = %(login => '', password => '');
     $CONFIG<default-stdin> = "Red is the ultimate cure for sadness. – Bill Blass\n";
-    $CONFIG<cave>          = "#whateverable",
-    $CONFIG<caregivers>    = [ "SmokeMachine" ];
+    $CONFIG<cave>          = '#whateverable',
+    $CONFIG<caregivers>    = [ 'SmokeMachine' ];
 
     my %*BOT-ENV;
-    Redable.new.selfrun: $nick, [ ‘red’, fuzzy-nick($nick, 1) ];
+    Redable.new.selfrun: $nick, [ 'red', fuzzy-nick($nick, 1) ];
 }
 
-multi MAIN("list-servers") {
+multi MAIN('list-servers') {
     say %( |RedBot::Server.^all>>.Hash )
 }
 
-multi MAIN("create-connection-db") {
+multi MAIN('create-connection-db') {
     RedBot::Server.^create-table
 }
 
-multi MAIN("add-server", Str $name, Str :$host!, Str :$nicks!, Str :$channels!, Str :$alias!) {
+multi MAIN('add-server', Str $name, Str :$host!, Str :$nicks!, Str :$channels!, Str :$alias!) {
     RedBot::Server.^create:
         :$name,
         |(:host($_) with $host),
