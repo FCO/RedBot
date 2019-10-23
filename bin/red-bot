@@ -24,7 +24,7 @@ class Redable does Whateverable {
                 .Str.substr(4).subst(/"␤"/, "\n", :g),
                 :out
         ;
-        $p.out.slurp.subst: /\n/,"␤", :g
+        return $p.out.slurp
     }
 }
 
