@@ -1,2 +1,2 @@
-tasks:
-  - init: apt-get update && apt-get install -y perl6
+image:
+  file: .gitpod.dockerfile
