@@ -4,7 +4,10 @@
     "Fernando Correa de Oliveira"
   ],
   "build-depends" : [ ],
-  "depends" : [ ],
+  "depends" : [
+    "Red",
+    "Whateverable"
+  ],
   "description" : "blah blah blah",
   "license" : "Artistic-2.0",
   "name" : "RedBot",
