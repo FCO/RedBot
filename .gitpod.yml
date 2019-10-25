@@ -1,4 +1,4 @@
 image:
   file: .gitpod.dockerfile
 tasks:
-  init:  zef install --deps-only --/test .
+  - init:  zef install --deps-only --/test .
